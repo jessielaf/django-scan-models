@@ -1,0 +1,17 @@
+# All python things
+*.log
+*.pot
+__pycache__/
+
+# Pip
+/crit.egg-info
+/dist
+/build
+
+# Docs
+!/docs/_build/.gitkeep
+/docs/_build
+/htmlcov
+.coverage
+.vagrant
+venv
