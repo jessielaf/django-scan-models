@@ -8,7 +8,9 @@ __pycache__/
 /dist
 /build
 
-# Docs
+# Tests
+output.json
+
 !/docs/_build/.gitkeep
 /docs/_build
 /htmlcov

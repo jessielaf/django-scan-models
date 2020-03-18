@@ -1,15 +1,18 @@
-class BaseValidator:
+from scan_models.validators.base_validator import BaseValidator
+
+
+class VeeValidate(BaseValidator):
     def set_required(self, validator: dict, required: bool):
-        pass
+        validator["required"] = required
 
     def set_max_length(self, validator: dict, max_length: int):
-        pass
+        validator["max"] = max_length
 
     def set_max_value(self, validator: dict, max_value: float):
-        pass
+        validator["max_value"] = max_value
 
     def set_min_value(self, validator: dict, min_value: float):
-        pass
+        validator["min_value"] = min_value
 
     def set_is_email(self, validator: dict):
-        pass
+        validator["email"] = True

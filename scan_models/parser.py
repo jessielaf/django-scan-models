@@ -1,18 +1,20 @@
-from dataclasses import dataclass
-
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db.models import fields
 
+from scan_models.validators.base_validator import BaseValidator
 from scan_models.validators.factory import ValidatorFactory
 
 
-@dataclass
 class FieldParser:
     field: fields.Field
-    validator = None
+    validator = {"name": " sda"}
+    validator_class: BaseValidator
 
-    def __init__(self):
-        self.validator_class = ValidatorFactory.get_validator()
+    def __init__(self, field: fields.Field):
+        self.validator_class = ValidatorFactory.get_validator()()
+        self.field = field
+
+        super().__init__()
 
     def parse(self):
         parsed = {}
@@ -38,22 +40,22 @@ class FieldParser:
     def _parse_validator(self):
         self._calculate_required()
         self._calculate_email()
-        self._calculate_max()
-        self._calculate_max_min_value()
+        self._calculate_max_length()
+        # self._calculate_max_min_value()
 
     def _calculate_required(self):
         required = self.field.default == fields.NOT_PROVIDED and not self.field.blank and not self.field.null
 
         if required:
-            self.validator_class.set_required(required)
+            self.validator_class.set_required(self.validator, required)
 
     def _calculate_email(self):
         if type(self.field) == fields.EmailField:
-            self.validator_class.set_is_email()
+            self.validator_class.set_is_email(self.validator)
 
-    def _calculate_max(self):
+    def _calculate_max_length(self):
         if self.field.max_length:
-            self.validator["max"] = self.field.max_length
+            self.validator_class.set_max_length(self.validator, self.field.max_length)
 
     def _calculate_max_min_value(self):
         if type(self.field) != fields.IntegerField:
@@ -70,7 +72,7 @@ class FieldParser:
         min_value, max_value = fields.connection.ops.integer_field_range(internal_type)
 
         if max_validator != max_value:
-            self.validator["max_value"] = max_validator
+            self.validator_class.set_max_value(self.validator, max_validator)
 
         if min_validator != min_value:
-            self.validator["min_value"] = min_validator
+            self.validator_class.set_min_value(self.validator, min_validator)
