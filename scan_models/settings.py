@@ -16,9 +16,6 @@ def get_setting(name: str):
     Returns: Value fo the setting
     """
 
-    setting = getattr(settings, SETTING_NAME) if hasattr(settings, SETTING_NAME) else DEFAULT_SETTINGS
+    setting = getattr(settings, SETTING_NAME) if hasattr(settings, SETTING_NAME) else {}
 
-    if name not in setting:
-        raise ValueError(f"{name} not found in {SETTING_NAME} or in default settings")
-
-    return setting[name]
+    return setting[name] if name in setting else DEFAULT_SETTINGS[name]
