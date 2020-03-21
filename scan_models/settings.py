@@ -2,7 +2,6 @@ from django.conf import settings
 
 SETTING_NAME = "SCAN_MODELS"
 
-# todo: add custom validator to readme
 DEFAULT_SETTINGS = {"mapping": {}, "validator": "scan_models.validators.VeeValidate"}
 
 

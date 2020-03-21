@@ -7,7 +7,7 @@ from scan_models.main import scan_model
 
 
 class TestScanModel(TestCase):
-    def test_happy(self):
+    def test_happy_flow(self):
         path = "./output.json"
         scan_model("tests.TestModel", path)
 

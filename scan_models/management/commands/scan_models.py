@@ -8,9 +8,8 @@ class Command(BaseCommand):
     help = "Creates the hour registration for the last week"
 
     def add_arguments(self, parser):
-        # todo: Add this to readme
         parser.add_argument(
-            "--model", help="If you only want to specify one model",
+            "-m", "--model", help="If you only want to specify one model",
         )
 
     def handle(self, *args, **options):

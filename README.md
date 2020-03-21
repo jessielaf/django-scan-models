@@ -1,5 +1,6 @@
 # Django scan models
-Parse django models to frontend validation
+
+A validator agnostic parser for django models to frontend validation
 
 ## Install
 ```
@@ -19,13 +20,61 @@ Lastly you can add the mapping to your `settings.py`
 SCAN_MODELS = {
     "mapping": {
         "tests.TestModel": "../frontend/tests/validator.json"
-    } 
+    }
 }
 ```
 
 ## Running
 
-Running the scan models can be done with this command:
 ```
 python manage.py scan_models
+```
+
+**Options**
+
+| Short | Long       | Default   | Description                              | Example |
+|-------|------------|-----------|------------------------------------------|---------|
+| `-m`  | `--model`  | -       | The model which should be parsed to a validator | `tests.TestModel` |
+
+## Settings
+
+### Mapping
+
+The mapping of models to validator json file
+
+```python
+# Example
+SCAN_MODELS = {
+    ...
+    "mapping": {
+        "tests.TestModel": "../frontend/tests/validator.json"
+    }
+}
+```
+
+### Validator
+
+The validator which is used by the frontend. Options are:
+- `scan_models.validator.VeeValidate`
+
+```python
+# Example
+SCAN_MODELS = {
+    ...
+    "validator": "scan_models.validator.VeeValidate"
+}
+```
+
+#### Custom validator
+
+To create your custom validator just import BaseValidator and override the functions.
+
+```python
+# Example
+from scan_models.validators.base_validator import BaseValidator
+
+
+class CustomValidator(BaseValidator):
+    def set_required(self, validator: dict, required: bool):
+        validator["custom_required"] = required
 ```
