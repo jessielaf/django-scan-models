@@ -10,7 +10,7 @@ class ValidatorFactory:
     def get_validator() -> Type[BaseValidator]:
         validator = locate(get_setting("validator"))
 
-        if type(validator) is not BaseValidator:
+        if not issubclass(validator, BaseValidator):
             raise TypeError("Validator is not of type BaseValidator")
 
         return validator

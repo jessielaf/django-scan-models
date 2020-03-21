@@ -4,6 +4,7 @@ import os
 from django.apps import apps
 
 from scan_models.parser import FieldParser
+from scan_models.settings import get_setting
 
 
 def scan_model(model_name: str, output: str):
@@ -23,18 +24,22 @@ def scan_model(model_name: str, output: str):
         validator_field = FieldParser(field).parse()
 
         if validator_field:
-            validator[_snake_to_camel(field.name)] = validator_field
+            validator[_format_name(field.name)] = validator_field
 
     with open(os.path.abspath(output), "w") as outfile:
         json.dump(validator, outfile, indent=2)
 
 
-def _snake_to_camel(value: str):
+def _format_name(value: str):
     """
-    Snake casing to camel
+    Format the name of the field
 
     Args:
         value: The string to format
     """
-    components = value.split("_")
-    return components[0] + "".join(x.title() for x in components[1:])
+
+    if get_setting("camelize"):
+        components = value.split("_")
+        return components[0] + "".join(x.title() for x in components[1:])
+    else:
+        return value

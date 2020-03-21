@@ -2,8 +2,8 @@ from scan_models.validators.base_validator import BaseValidator
 
 
 class VeeValidate(BaseValidator):
-    def set_required(self, validator: dict, required: bool):
-        validator["required"] = required
+    def set_required(self, validator: dict):
+        validator["required"] = True
 
     def set_max_length(self, validator: dict, max_length: int):
         validator["max"] = max_length

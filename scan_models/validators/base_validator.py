@@ -1,5 +1,5 @@
 class BaseValidator:
-    def set_required(self, validator: dict, required: bool):
+    def set_required(self, validator: dict):
         pass
 
     def set_max_length(self, validator: dict, max_length: int):

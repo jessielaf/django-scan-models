@@ -7,7 +7,7 @@ from scan_models.validators.factory import ValidatorFactory
 
 class FieldParser:
     field: fields.Field
-    validator = {"name": " sda"}
+    validator = {}
     validator_class: BaseValidator
 
     def __init__(self, field: fields.Field):
@@ -41,13 +41,13 @@ class FieldParser:
         self._calculate_required()
         self._calculate_email()
         self._calculate_max_length()
-        # self._calculate_max_min_value()
+        self._calculate_max_min_value()
 
     def _calculate_required(self):
         required = self.field.default == fields.NOT_PROVIDED and not self.field.blank and not self.field.null
 
         if required:
-            self.validator_class.set_required(self.validator, required)
+            self.validator_class.set_required(self.validator)
 
     def _calculate_email(self):
         if type(self.field) == fields.EmailField:
@@ -61,18 +61,18 @@ class FieldParser:
         if type(self.field) != fields.IntegerField:
             return
 
-        max_validator = [validator for validator in self.field.validators if type(validator) == MaxValueValidator][
-            0
-        ].limit_value
-        min_validator = [validator for validator in self.field.validators if type(validator) == MinValueValidator][
-            0
-        ].limit_value
+        max_validator = [validator for validator in self.field.validators if type(validator) == MaxValueValidator]
+        min_validator = [validator for validator in self.field.validators if type(validator) == MinValueValidator]
 
         internal_type = self.field.get_internal_type()
         min_value, max_value = fields.connection.ops.integer_field_range(internal_type)
 
-        if max_validator != max_value:
-            self.validator_class.set_max_value(self.validator, max_validator)
+        if len(max_validator):
+            max_validator_value = max_validator[0].limit_value
+            if max_validator_value != max_value:
+                self.validator_class.set_max_value(self.validator, max_validator_value)
 
-        if min_validator != min_value:
-            self.validator_class.set_min_value(self.validator, min_validator)
+        if len(min_validator):
+            min_validator_value = min_validator[0].limit_value
+            if min_validator_value != min_value:
+                self.validator_class.set_min_value(self.validator, min_validator_value)

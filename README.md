@@ -52,7 +52,23 @@ SCAN_MODELS = {
 }
 ```
 
+### Camelize
+
+**Default**: `False`
+
+Camelize the field name in the json. For example `email_address` will become `emailAddress`.
+
+ ```python
+# Example
+SCAN_MODELS = {
+    ...
+    "camelize": True
+}
+```
+
 ### Validator
+
+**Default**: `scan_models.validator.VeeValidate`
 
 The validator which is used by the frontend. Options are:
 - `scan_models.validator.VeeValidate`
