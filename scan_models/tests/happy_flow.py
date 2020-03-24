@@ -34,11 +34,8 @@ class TestHappyFlow(TestCase):
     def test_camelize(self):
         settings.SCAN_MODELS["camelize"] = True
 
-        response["maxAmount"] = response["max_amount"]
-        response.pop("max_amount")
-
-        response["minAmount"] = response["min_amount"]
-        response.pop("min_amount")
+        response["maxAmount"] = response.pop("max_amount")
+        response["minAmount"] = response.pop("min_amount")
 
         data = self.create_test()
         self.assertEqual(data, response)
