@@ -17,6 +17,10 @@ class FieldParser:
         super().__init__()
 
     def parse(self):
+        # If auto field there is no frontend validation
+        if isinstance(self.field, fields.AutoField):
+            return None
+
         parsed = {}
 
         self.validator = {}
@@ -32,7 +36,7 @@ class FieldParser:
 
     def _parse_attributes(self):
         attributes = {}
-        if type(self.field) == fields.IntegerField:
+        if isinstance(self.field, fields.IntegerField):
             attributes["type"] = "number"
 
         return attributes
@@ -50,7 +54,7 @@ class FieldParser:
             self.validator_class.set_required(self.validator)
 
     def _calculate_email(self):
-        if type(self.field) == fields.EmailField:
+        if isinstance(self.field, fields.EmailField):
             self.validator_class.set_is_email(self.validator)
 
     def _calculate_max_length(self):
@@ -58,11 +62,11 @@ class FieldParser:
             self.validator_class.set_max_length(self.validator, self.field.max_length)
 
     def _calculate_max_min_value(self):
-        if type(self.field) != fields.IntegerField:
+        if not isinstance(self.field, fields.IntegerField):
             return
 
-        max_validator = [validator for validator in self.field.validators if type(validator) == MaxValueValidator]
-        min_validator = [validator for validator in self.field.validators if type(validator) == MinValueValidator]
+        max_validator = [validator for validator in self.field.validators if isinstance(validator, MaxValueValidator)]
+        min_validator = [validator for validator in self.field.validators if isinstance(validator, MinValueValidator)]
 
         internal_type = self.field.get_internal_type()
         min_value, max_value = fields.connection.ops.integer_field_range(internal_type)

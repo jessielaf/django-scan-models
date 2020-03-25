@@ -8,6 +8,10 @@ from scan_models.parser import FieldParser
 
 
 class TestParser(TestCase):
+    def test_skip_auto(self):
+        parser = FieldParser(models.AutoField())
+        self.assertEqual(parser.parse(), None)
+
     def test_required(self):
         parser = FieldParser(models.CharField())
         parser.validator_class.set_required = MagicMock()
