@@ -9,9 +9,10 @@ from scan_models.main import scan_model
 
 response = {
     "name": {"validator": {"max": 30}},
-    "email": {"validator": {"required": True, "email": True, "max": 254}},
-    "max_amount": {"validator": {"max_value": 4, "required": True}, "attributes": {"type": "number"}},
-    "min_amount": {"validator": {"min_value": 1, "required": True}, "attributes": {"type": "number"}},
+    "email": {"validator": {"required": True, "max": 254, "email": True}},
+    "max_amount": {"validator": {"required": True, "max_value": 4}, "attributes": {"type": "number"}},
+    "min_amount": {"validator": {"required": True, "min_value": 1}, "attributes": {"type": "number"}},
+    "choices": {"validator": {"required": True, "max": 4, "oneOf": ["yes", "no"]}},
 }
 
 base_settings = deepcopy(settings)

@@ -1,3 +1,5 @@
+from collections import OrderedDict
+
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db.models import fields
 
@@ -7,12 +9,12 @@ from scan_models.validators.factory import ValidatorFactory
 
 class FieldParser:
     field: fields.Field
-    validator = {}
     validator_class: BaseValidator
 
     def __init__(self, field: fields.Field):
         self.validator_class = ValidatorFactory.get_validator()()
         self.field = field
+        self.validator = OrderedDict()
 
         super().__init__()
 
@@ -23,7 +25,6 @@ class FieldParser:
 
         parsed = {}
 
-        self.validator = {}
         self._parse_validator()
         if self.validator:
             parsed["validator"] = self.validator
@@ -44,6 +45,7 @@ class FieldParser:
     def _parse_validator(self):
         self._calculate_required()
         self._calculate_email()
+        self._calculate_choices()
         self._calculate_max_length()
         self._calculate_max_min_value()
 
@@ -60,6 +62,10 @@ class FieldParser:
     def _calculate_max_length(self):
         if self.field.max_length:
             self.validator_class.set_max_length(self.validator, self.field.max_length)
+
+    def _calculate_choices(self):
+        if self.field.choices:
+            self.validator_class.set_choices(self.validator, [choice[0] for choice in self.field.choices])
 
     def _calculate_max_min_value(self):
         if not isinstance(self.field, fields.IntegerField):

@@ -5,6 +5,9 @@ class BaseValidator:
     def set_max_length(self, validator: dict, max_length: int):
         pass
 
+    def set_choices(self, validator: dict, choices: list):
+        pass
+
     def set_max_value(self, validator: dict, max_value: float):
         pass
 
