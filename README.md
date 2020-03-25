@@ -94,3 +94,10 @@ class CustomValidator(BaseValidator):
     def set_required(self, validator: dict, required: bool):
         validator["custom_required"] = required
 ```
+
+## Testing
+
+Running the tests can be done with:
+```
+coverage run --source=scan_models/ manage.py test
+```
