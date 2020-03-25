@@ -14,6 +14,5 @@ output.json
 !/docs/_build/.gitkeep
 /docs/_build
 /htmlcov
-.coverage
 .vagrant
 venv

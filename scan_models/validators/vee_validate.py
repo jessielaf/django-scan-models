@@ -8,6 +8,9 @@ class VeeValidate(BaseValidator):
     def set_max_length(self, validator: dict, max_length: int):
         validator["max"] = max_length
 
+    def set_choices(self, validator: dict, choices: list):
+        validator["oneOf"] = choices
+
     def set_max_value(self, validator: dict, max_value: float):
         validator["max_value"] = max_value
 
