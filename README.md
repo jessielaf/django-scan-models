@@ -2,6 +2,8 @@
 
 A validator agnostic parser for django models to frontend validation
 
+![Coverage](./coverage.svg)
+
 ## Install
 ```
 pip install django-scan-models
@@ -99,5 +101,5 @@ class CustomValidator(BaseValidator):
 
 Running the tests can be done with:
 ```
-coverage run --source=scan_models/ manage.py test
+coverage run --source=scan_models/ manage.py test && coverage-badge -o coverage.svg
 ```

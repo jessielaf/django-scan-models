@@ -71,6 +71,14 @@ version = "5.0.4"
 toml = ["toml"]
 
 [[package]]
+category = "dev"
+description = "Generate coverage badges for Coverage.py."
+name = "coverage-badge"
+optional = false
+python-versions = "*"
+version = "1.0.1"
+
+[[package]]
 category = "main"
 description = "A high-level Python Web framework that encourages rapid development and clean, pragmatic design."
 name = "django"
@@ -144,7 +152,7 @@ python-versions = "*"
 version = "1.4.1"
 
 [metadata]
-content-hash = "79250a7a2d4f12f64289f53e3ac09cba9e0496c1b1cbaa966bbdd672a82f7ea7"
+content-hash = "6858c4d88ad17fe1561552a8e919d45cbb44abfccffab4f36c2bb00e92da358f"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -200,6 +208,10 @@ coverage = [
     {file = "coverage-5.0.4-cp39-cp39-win32.whl", hash = "sha256:7c9762f80a25d8d0e4ab3cb1af5d9dffbddb3ee5d21c43e3474c84bf5ff941f7"},
     {file = "coverage-5.0.4-cp39-cp39-win_amd64.whl", hash = "sha256:4482f69e0701139d0f2c44f3c395d1d1d37abd81bfafbf9b6efbe2542679d892"},
     {file = "coverage-5.0.4.tar.gz", hash = "sha256:1b60a95fc995649464e0cd48cecc8288bac5f4198f21d04b8229dc4097d76823"},
+]
+coverage-badge = [
+    {file = "coverage-badge-1.0.1.tar.gz", hash = "sha256:142fd121f3bd14956aff3c45bff6f8bc37bd74c6350626a950ebb6accb24276e"},
+    {file = "coverage_badge-1.0.1-py2.py3-none-any.whl", hash = "sha256:3796de21b4e190d38beb8806956946fbdb02fe3a2a7452b460a9cff958009833"},
 ]
 django = [
     {file = "Django-3.0.4-py3-none-any.whl", hash = "sha256:89e451bfbb815280b137e33e454ddd56481fdaa6334054e6e031041ee1eda360"},
