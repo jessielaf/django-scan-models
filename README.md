@@ -101,5 +101,5 @@ class CustomValidator(BaseValidator):
 
 Running the tests can be done with:
 ```
-coverage run --source=scan_models/ manage.py test && coverage-badge -o coverage.svg
+coverage run --source=scan_models/ manage.py test && coverage-badge -fo coverage.svg
 ```

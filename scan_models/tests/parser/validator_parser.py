@@ -5,18 +5,18 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.test import TestCase
 
-from scan_models.parser import FieldParser
+from scan_models.parser.validator import ValidatorParser
 
 od = OrderedDict()
 
 
-class TestParser(TestCase):
+class TestValidatorParser(TestCase):
     def test_skip_auto(self):
-        parser = FieldParser(models.AutoField())
-        self.assertEqual(parser.parse(), None)
+        parser = ValidatorParser(models.AutoField())
+        self.assertFalse(bool(parser.parse()))
 
     def test_required(self):
-        parser = FieldParser(models.CharField())
+        parser = ValidatorParser(models.CharField())
         set_required = MagicMock()
         parser.validator_class.set_required = set_required
 
@@ -44,7 +44,7 @@ class TestParser(TestCase):
         set_required.reset_mock()
 
     def test_max_length(self):
-        parser = FieldParser(models.CharField(max_length=44))
+        parser = ValidatorParser(models.CharField(max_length=44))
         set_max_length = MagicMock()
         parser.validator_class.set_max_length = set_max_length
 
@@ -62,7 +62,7 @@ class TestParser(TestCase):
             FIRST = "first"
             SECOND = "second"
 
-        parser = FieldParser(models.CharField(choices=ChoiceClass.choices))
+        parser = ValidatorParser(models.CharField(choices=ChoiceClass.choices))
         set_choices = MagicMock()
         parser.validator_class.set_choices = set_choices
 
@@ -77,7 +77,7 @@ class TestParser(TestCase):
         set_choices.reset_mock()
 
     def test_email(self):
-        parser = FieldParser(models.CharField())
+        parser = ValidatorParser(models.CharField())
         set_is_email = MagicMock()
         parser.validator_class.set_is_email = set_is_email
 
@@ -91,7 +91,7 @@ class TestParser(TestCase):
         set_is_email.reset_mock()
 
     def test_max_min_value(self):
-        parser = FieldParser(models.CharField())
+        parser = ValidatorParser(models.CharField())
         set_max_value = MagicMock()
         parser.validator_class.set_max_value = set_max_value
 

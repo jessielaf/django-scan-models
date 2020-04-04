@@ -1,2 +1,4 @@
 from .happy_flow import TestHappyFlow
-from .parser import TestParser
+from .command import TestCommand
+from .parser.validator_parser import TestValidatorParser
+from .parser.attributes_parser import TestAttributesParser

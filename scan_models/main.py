@@ -3,7 +3,7 @@ import os
 
 from django.apps import apps
 
-from scan_models.parser import FieldParser
+from scan_models.parser.main import FieldParser
 from scan_models.settings import get_setting
 
 
