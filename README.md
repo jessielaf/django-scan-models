@@ -32,6 +32,22 @@ SCAN_MODELS = {
 python manage.py scan_models
 ```
 
+This will output:
+```json
+{
+    "email": {
+        "validator": {
+          "required": true,
+          "max": 254,
+          "email": true
+        },
+        "attributes": {
+          "type": "email"
+        }
+    }
+}
+```
+
 **Options**
 
 | Short | Long       | Default   | Description                              | Example |
@@ -102,4 +118,13 @@ class CustomValidator(BaseValidator):
 Running the tests can be done with:
 ```
 coverage run --source=scan_models/ manage.py test && coverage-badge -fo coverage.svg
+```
+
+## Contributing
+
+You can create a pull request. 
+
+Formatting is done with black as such:
+```
+black . --line-length 120
 ```
