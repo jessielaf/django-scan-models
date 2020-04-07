@@ -12,11 +12,13 @@ class TestAttributesParser(TestCase):
     def test_nothing(self):
         self.assertEqual(od, AttributesParser(fields.CharField()).parse())
 
-    def test_number(self):
+    def test_type(self):
         self.assertEqual({"type": "number"}, AttributesParser(fields.IntegerField()).parse())
-
-    def test_email(self):
         self.assertEqual({"type": "email"}, AttributesParser(fields.EmailField()).parse())
+
+    def test_element(self):
+        self.assertEqual({"element": "checkbox"}, AttributesParser(fields.BooleanField()).parse())
+        self.assertEqual({"element": "textarea"}, AttributesParser(fields.TextField()).parse())
 
     def test_choices(self):
         class TestChoices(Choices):
