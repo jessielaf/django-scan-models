@@ -3,51 +3,23 @@ from collections import OrderedDict
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db.models import fields
 
-from scan_models.validators.base_validator import BaseValidator
-from scan_models.validators.factory import ValidatorFactory
+from scan_models.factory import Factory
 
 
-class FieldParser:
-    field: fields.Field
-    validator_class: BaseValidator
-
+class ValidatorParser:
     def __init__(self, field: fields.Field):
-        self.validator_class = ValidatorFactory.get_validator()()
         self.field = field
         self.validator = OrderedDict()
-
-        super().__init__()
+        self.validator_class = Factory.get_validator()()
 
     def parse(self):
-        # If auto field there is no frontend validation
-        if isinstance(self.field, fields.AutoField):
-            return None
-
-        parsed = {}
-
-        self._parse_validator()
-        if self.validator:
-            parsed["validator"] = self.validator
-
-        attributes = self._parse_attributes()
-        if attributes:
-            parsed["attributes"] = attributes
-
-        return parsed
-
-    def _parse_attributes(self):
-        attributes = {}
-        if isinstance(self.field, fields.IntegerField):
-            attributes["type"] = "number"
-
-        return attributes
-
-    def _parse_validator(self):
         self._calculate_required()
-        self._calculate_email()
-        self._calculate_choices()
         self._calculate_max_length()
+        self._calculate_choices()
         self._calculate_max_min_value()
+        self._calculate_email()
+
+        return self.validator
 
     def _calculate_required(self):
         required = self.field.default == fields.NOT_PROVIDED and not self.field.blank and not self.field.null

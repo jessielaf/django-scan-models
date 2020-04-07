@@ -12,9 +12,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 
-from scan_models.settings import DEFAULT_SETTINGS
-
-SCAN_MODELS = DEFAULT_SETTINGS
+SCAN_MODELS = {"mapping": {"tests.TestModel": "./output.json"}}
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

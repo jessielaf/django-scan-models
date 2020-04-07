@@ -5,7 +5,7 @@ from scan_models.validators.base_validator import BaseValidator
 from pydoc import locate
 
 
-class ValidatorFactory:
+class Factory:
     @staticmethod
     def get_validator() -> Type[BaseValidator]:
         validator = locate(get_setting("validator"))

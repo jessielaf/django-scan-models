@@ -12,9 +12,9 @@ class Command(BaseCommand):
             "-m", "--model", help="If you only want to specify one model",
         )
 
-    def handle(self, *args, **options):
+    def handle(self, *args, **kwargs):
         data = get_setting("mapping")
-        option_model = options.get("model", None)
+        option_model = kwargs.get("model", None)
 
         if option_model:
             scan_model(option_model, data[option_model])
