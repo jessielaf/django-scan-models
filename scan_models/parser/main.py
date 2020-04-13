@@ -3,6 +3,7 @@ from django.db.models import fields
 from scan_models.parser.attributes import AttributesParser
 from scan_models.parser.validator import ValidatorParser
 from scan_models.validators.base_validator import BaseValidator
+from scan_models.verbosity import is_verbosity, Verbosity
 
 
 class FieldParser:
@@ -22,11 +23,11 @@ class FieldParser:
         parsed = {}
 
         validator = ValidatorParser(self.field).parse()
-        if validator:
+        if validator or is_verbosity(Verbosity.ONE):
             parsed["validator"] = validator
 
         attributes = AttributesParser(self.field).parse()
-        if attributes:
+        if attributes or is_verbosity(Verbosity.ONE):
             parsed["attributes"] = attributes
 
         return parsed

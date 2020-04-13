@@ -1,3 +1,8 @@
+import json
+import os
+
+from scan_models.main import scan_model
+
 standard_output = {
     "name": {"validator": {"max": 30}},
     "email": {"validator": {"required": True, "max": 254, "email": True}, "attributes": {"type": "email"}},
@@ -8,3 +13,13 @@ standard_output = {
         "attributes": {"options": ["Yes", "No"]},
     },
 }
+
+
+def create_test(model):
+    path = "./output.json"
+    scan_model(model, path)
+
+    file = open(os.path.abspath(path), "r")
+    data = json.load(file)
+
+    return data

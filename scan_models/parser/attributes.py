@@ -2,6 +2,8 @@ from collections import OrderedDict
 
 from django.db.models import fields
 
+from scan_models.verbosity import is_verbosity, Verbosity
+
 
 class AttributesParser:
     def __init__(self, field: fields.Field):
@@ -16,6 +18,10 @@ class AttributesParser:
         return self.attributes
 
     def _calculate_element(self):
+        # Only calculate element if verbosity is high enough. This is only the case when using the general-fields package
+        if not is_verbosity(Verbosity.TWO):
+            return
+
         element = ""
 
         if isinstance(self.field, fields.TextField):
