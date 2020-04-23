@@ -14,6 +14,7 @@ class AttributesParser:
         self._calculate_element()
         self._calculate_type()
         self._calculate_options()
+        self._calculate_default()
 
         return self.attributes
 
@@ -47,3 +48,7 @@ class AttributesParser:
     def _calculate_options(self):
         if self.field.choices:
             self.attributes["options"] = [choice[1] for choice in self.field.choices]
+
+    def _calculate_default(self):
+        if self.field.default and self.field.default != fields.NOT_PROVIDED:
+            self.attributes["default"] = self.field.default

@@ -20,12 +20,14 @@ class TestAttributesParser(TestCase):
         parser._calculate_options = MagicMock()
         parser._calculate_element = MagicMock()
         parser._calculate_type = MagicMock()
+        parser._calculate_default = MagicMock()
 
         parser.parse()
 
         self.assertEqual(parser._calculate_options.call_count, 1)
         self.assertEqual(parser._calculate_element.call_count, 1)
         self.assertEqual(parser._calculate_type.call_count, 1)
+        self.assertEqual(parser._calculate_default.call_count, 1)
 
     def test_type(self):
         # Number type
@@ -68,3 +70,16 @@ class TestAttributesParser(TestCase):
         parser = AttributesParser(fields.CharField(choices=TestChoices.choices))
         parser._calculate_options()
         self.assertEqual(["Yes", "No"], parser.attributes["options"])
+
+    def test_default(self):
+        parser = AttributesParser(fields.CharField())
+        parser._calculate_default()
+        self.assertFalse("default" in parser.attributes)
+
+        parser = AttributesParser(fields.CharField(default=""))
+        parser._calculate_default()
+        self.assertFalse("default" in parser.attributes)
+
+        parser = AttributesParser(fields.CharField(default="test"))
+        parser._calculate_default()
+        self.assertEqual("test", parser.attributes["default"])
