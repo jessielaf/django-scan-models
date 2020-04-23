@@ -24,9 +24,11 @@ class AttributesParser:
 
         element = ""
 
-        if isinstance(self.field, fields.TextField):
+        if self.field.choices:
+            element = "select"
+        elif isinstance(self.field, fields.TextField):
             element = "textarea"
-        if isinstance(self.field, fields.BooleanField):
+        elif isinstance(self.field, fields.BooleanField):
             element = "checkbox"
 
         if element:
