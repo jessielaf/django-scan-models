@@ -13,3 +13,7 @@ class TestModel(models.Model):
     max_amount = models.IntegerField(validators=[MaxValueValidator(4)])
     min_amount = models.IntegerField(validators=[MinValueValidator(1)])
     choices = models.CharField(max_length=4, choices=Choices.choices)
+
+
+class TestVerbosity(models.Model):
+    text = models.TextField(null=True)

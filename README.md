@@ -84,6 +84,27 @@ SCAN_MODELS = {
 }
 ```
 
+
+### Verbosity
+
+**Default**: `1`
+
+Verbosity dictates how much extra data gets added to the json file. The options are
+
+| Verbosity level | Effect |
+| --------------- | ------ |
+| `0`               | This option creates the smallest json file. This will remove everything that is empty. For example if the validator is empty the validator is not added to the json file | 
+| `1`               | Verbosity 1 is more consistent than 0 because this option **always** adds the validator and attributes fields. |
+| `2`               | You **need** to use this option when you use the `vue-general-field` package. This adds `element` to `attributes` |
+
+ ```python
+# Example
+SCAN_MODELS = {
+    ...
+    "verbosity": 0
+}
+```
+
 ### Validator
 
 **Default**: `scan_models.validator.VeeValidate`
