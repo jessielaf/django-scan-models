@@ -50,5 +50,15 @@ class AttributesParser:
             self.attributes["options"] = [choice[1] for choice in self.field.choices]
 
     def _calculate_default(self):
-        if self.field.default and self.field.default != fields.NOT_PROVIDED:
-            self.attributes["default"] = self.field.default
+        """
+        Only adds primitive types as default
+
+        TODO: Add more options as default
+        """
+
+        if (
+            self.field.default
+            and self.field.default != fields.NOT_PROVIDED
+            and isinstance(self.field.default, (list, int, str, bool, float))
+        ):
+            self.attributes["default"] = str(self.field.default)

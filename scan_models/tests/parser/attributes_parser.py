@@ -1,3 +1,4 @@
+import uuid
 from collections import OrderedDict
 from unittest.mock import MagicMock
 
@@ -83,3 +84,7 @@ class TestAttributesParser(TestCase):
         parser = AttributesParser(fields.CharField(default="test"))
         parser._calculate_default()
         self.assertEqual("test", parser.attributes["default"])
+
+        parser = AttributesParser(fields.CharField(default=uuid.uuid4()))
+        parser._calculate_default()
+        self.assertFalse("default" in parser.attributes)

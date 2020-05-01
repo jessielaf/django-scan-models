@@ -4,7 +4,7 @@
 __pycache__/
 
 # Pip
-/crit.egg-info
+django_scan_models.egg-info
 /dist
 /build
 
