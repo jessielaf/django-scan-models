@@ -20,7 +20,7 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "~3.7"
 django = "^3.0.4"
 mysqlclient = "^1.4.6"
 
