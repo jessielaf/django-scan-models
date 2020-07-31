@@ -1,4 +1,4 @@
-from django.core.validators import MaxValueValidator, MinValueValidator
+from django.core.validators import MaxValueValidator, MinValueValidator, RegexValidator
 from django.db import models
 
 
@@ -13,6 +13,7 @@ class TestModel(models.Model):
     max_amount = models.IntegerField(validators=[MaxValueValidator(4)])
     min_amount = models.IntegerField(validators=[MinValueValidator(1)])
     choices = models.CharField(max_length=4, choices=Choices.choices)
+    a_or_b = models.CharField(max_length=200, blank=True, validators=[RegexValidator(regex=r"(a|b)")])
 
 
 class TestVerbosity(models.Model):

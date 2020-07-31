@@ -19,3 +19,6 @@ class VeeValidate(BaseValidator):
 
     def set_is_email(self, validator: dict):
         validator["email"] = True
+
+    def set_regex(self, validator: dict, regex: str):
+        validator["regex"] = regex

@@ -9,6 +9,8 @@ from scan_models.tests.constances import standard_output, create_test
 
 
 class TestHappyFlow(TestCase):
+    maxDiff = None
+
     def setUp(self) -> None:
         settings.SCAN_MODELS = copy(DEFAULT_SETTINGS)
 
@@ -22,6 +24,7 @@ class TestHappyFlow(TestCase):
 
         output["maxAmount"] = output.pop("max_amount")
         output["minAmount"] = output.pop("min_amount")
+        output["aOrB"] = output.pop("a_or_b")
 
         data = create_test("tests.TestModel")
         self.assertEqual(data, output)
