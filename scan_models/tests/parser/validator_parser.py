@@ -1,7 +1,7 @@
 from collections import OrderedDict
 from unittest.mock import MagicMock
 
-from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator, RegexValidator, URLValidator
 from django.db import models
 from django.test import TestCase
 
@@ -89,6 +89,27 @@ class TestValidatorParser(TestCase):
         parser._calculate_email()
         self.assertTrue(set_is_email.called)
         set_is_email.reset_mock()
+
+    def test_regex(self):
+        parser = ValidatorParser(models.CharField())
+        set_regex = MagicMock()
+        parser.validator_class.set_regex = set_regex
+
+        parser._calculate_regex()
+        self.assertFalse(set_regex.called)
+        set_regex.reset_mock()
+
+        parser.field = models.CharField(validators=[RegexValidator(regex=r"(a|b)")])
+
+        parser._calculate_regex()
+        self.assertTrue(set_regex.called)
+        set_regex.reset_mock()
+
+        parser.field = models.CharField(validators=[URLValidator()])
+
+        parser._calculate_regex()
+        self.assertTrue(set_regex.called)
+        set_regex.reset_mock()
 
     def test_max_min_value(self):
         parser = ValidatorParser(models.CharField())

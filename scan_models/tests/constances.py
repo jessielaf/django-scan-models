@@ -12,6 +12,7 @@ standard_output = {
         "validator": {"required": True, "max": 4, "oneOf": ["yes", "no"]},
         "attributes": {"options": ["Yes", "No"]},
     },
+    "a_or_b": {"validator": {"max": 200, "regex": "(a|b)"}},
 }
 
 

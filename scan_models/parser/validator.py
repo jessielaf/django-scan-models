@@ -1,6 +1,6 @@
 from collections import OrderedDict
 
-from django.core.validators import MaxValueValidator, MinValueValidator
+from django.core.validators import MaxValueValidator, MinValueValidator, RegexValidator
 from django.db.models import fields
 
 from scan_models.factory import Factory
@@ -18,6 +18,7 @@ class ValidatorParser:
         self._calculate_choices()
         self._calculate_max_min_value()
         self._calculate_email()
+        self._calculate_regex()
 
         return self.validator
 
@@ -39,22 +40,29 @@ class ValidatorParser:
         if self.field.choices:
             self.validator_class.set_choices(self.validator, [choice[0] for choice in self.field.choices])
 
+    def _calculate_regex(self):
+        regex_validator = self._find_validator(RegexValidator)
+
+        if regex_validator:
+            self.validator_class.set_regex(self.validator, regex_validator.regex.pattern)
+
     def _calculate_max_min_value(self):
         if not isinstance(self.field, fields.IntegerField):
             return
 
-        max_validator = [validator for validator in self.field.validators if isinstance(validator, MaxValueValidator)]
-        min_validator = [validator for validator in self.field.validators if isinstance(validator, MinValueValidator)]
+        max_validator = self._find_validator(MaxValueValidator)
+        min_validator = self._find_validator(MinValueValidator)
 
         internal_type = self.field.get_internal_type()
         min_value, max_value = fields.connection.ops.integer_field_range(internal_type)
 
-        if len(max_validator):
-            max_validator_value = max_validator[0].limit_value
-            if max_validator_value != max_value:
-                self.validator_class.set_max_value(self.validator, max_validator_value)
+        if max_validator and max_validator.limit_value != max_value:
+            self.validator_class.set_max_value(self.validator, max_validator.limit_value)
 
-        if len(min_validator):
-            min_validator_value = min_validator[0].limit_value
-            if min_validator_value != min_value:
-                self.validator_class.set_min_value(self.validator, min_validator_value)
+        if min_validator and min_validator.limit_value != min_value:
+            self.validator_class.set_min_value(self.validator, min_validator.limit_value)
+
+    def _find_validator(self, validator_class):
+        validator = [validator for validator in self.field.validators if isinstance(validator, validator_class)]
+
+        return validator[0] if len(validator) else None

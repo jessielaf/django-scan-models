@@ -16,3 +16,6 @@ class BaseValidator:
 
     def set_is_email(self, validator: dict):
         pass
+
+    def set_regex(self, validator: dict, regex: str):
+        pass
