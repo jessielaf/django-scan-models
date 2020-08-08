@@ -31,6 +31,8 @@ class AttributesParser:
             element = "textarea"
         elif isinstance(self.field, fields.BooleanField):
             element = "checkbox"
+        elif isinstance(self.field, fields.DateField):
+            element = "date"
 
         if element:
             self.attributes["element"] = element

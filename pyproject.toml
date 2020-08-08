@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django-scan-models"
-version = "0.2.5"
+version = "0.2.7"
 description = "Django scan models: Parse django models to frontend validation"
 authors = ["Jessie Liauw A Fong <jessielaff@live.nl>"]
 packages = [
@@ -20,7 +20,7 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-python = "~3.7"
+python = ">=3.7,<=3.8"
 django = "^3.0.4"
 mysqlclient = ">=1.4.6"
 
