@@ -8,6 +8,8 @@ from scan_models.tests.constances import standard_output
 
 
 class TestCommand(TestCase):
+    maxDiff = None
+
     def test_all_models(self):
         Command().handle()
 

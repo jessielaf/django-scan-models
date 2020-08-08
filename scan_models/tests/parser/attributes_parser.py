@@ -55,6 +55,11 @@ class TestAttributesParser(TestCase):
         parser._calculate_element()
         self.assertEqual("textarea", parser.attributes["element"])
 
+        # Date
+        parser = AttributesParser(fields.DateField())
+        parser._calculate_element()
+        self.assertEqual("date", parser.attributes["element"])
+
         # Select
         parser = AttributesParser(fields.CharField(choices=(("1", "1"), ("2", "2"))))
         parser._calculate_element()
