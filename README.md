@@ -1,6 +1,8 @@
 # Django scan models
 
-A validator agnostic parser for django models to frontend validation
+A validator agnostic parser for django models to frontend validation and forms
+
+To make optimal use of this package you can use [Vue scan field](https://github.com/jessielaf/vue-scan-field). This package will **automatically** generate forms based on the generated json file.
 
 ![Coverage](./coverage.svg)
 
@@ -95,7 +97,7 @@ Verbosity dictates how much extra data gets added to the json file. The options 
 | --------------- | ------ |
 | `0`               | This option creates the smallest json file. This will remove everything that is empty. For example if the validator is empty the validator is not added to the json file | 
 | `1`               | Verbosity 1 is more consistent than 0 because this option **always** adds the validator and attributes fields. |
-| `2`               | You **need** to use this option when you use the `vue-general-field` package. This adds `element` to `attributes` |
+| `2`               | You **need** to use this option when you use the [`vue-scan-field`](https://github.com/jessielaf/vue-scan-field) package. This adds `element` to `attributes` |
 
  ```python
 # Example
