@@ -1,19 +1,17 @@
 [tool.poetry]
 name = "django-scan-models"
-version = "0.2.7"
+version = "0.2.8"
 description = "Django scan models: Parse django models to frontend validation"
 authors = ["Jessie Liauw A Fong <jessielaff@live.nl>"]
 packages = [
     { include = "scan_models" }
 ]
 classifiers = [
-    "Development Status :: 4 - Beta",
+    "Development Status :: 5 - Production/Stable",
     "Framework :: Django :: 3.0",
     "Environment :: Console",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.5",
-    "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
@@ -22,12 +20,12 @@ classifiers = [
 [tool.poetry.dependencies]
 python = ">=3.7,<=3.8"
 django = "^3.0.4"
-mysqlclient = ">=1.4.6"
 
 [tool.poetry.dev-dependencies]
 black = "^19.10b0"
 coverage = "^5.0.4"
 coverage-badge = "^1.0.1"
+mysqlclient = "^2.0.1"
 
 [build-system]
 requires = ["poetry>=0.12"]
