@@ -1,5 +1,6 @@
 import json
 import os
+from pathlib import Path
 
 from django.apps import apps
 
@@ -7,7 +8,7 @@ from scan_models.parser.main import FieldParser
 from scan_models.settings import get_setting
 
 
-def scan_model(model_name: str, output: str):
+def scan_model(model_name: str, output: str, location_prefix: str = ""):
     """
     Scan the model and output it to a file
 
@@ -26,7 +27,13 @@ def scan_model(model_name: str, output: str):
         if validator_field:
             validator[_format_name(field.name)] = validator_field
 
-    with open(os.path.abspath(output), "w") as outfile:
+    # We need to make sure the directory where we put the file exists
+    location_prefix = Path(location_prefix or "")
+    output_path = location_prefix.joinpath(Path(output))
+    if not output_path.parent.exists():
+        output_path.parent.mkdir(parents=True)
+
+    with open(output_path.resolve(), "w") as outfile:
         json.dump(validator, outfile, indent=2)
 
 

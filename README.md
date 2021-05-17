@@ -55,6 +55,7 @@ This will output:
 | Short | Long       | Default   | Description                              | Example |
 |-------|------------|-----------|------------------------------------------|---------|
 | `-m`  | `--model`  | -       | The model which should be parsed to a validator | `tests.TestModel` |
+| `-p`  | `--prefix`  | -       | Prefix for the location of the mapping | `../testapp-api` |
 
 ## Settings
 

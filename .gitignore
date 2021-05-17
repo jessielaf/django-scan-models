@@ -9,7 +9,7 @@ django_scan_models.egg-info
 /build
 
 # Tests
-output.json
+test_output/*
 
 !/docs/_build/.gitkeep
 /docs/_build

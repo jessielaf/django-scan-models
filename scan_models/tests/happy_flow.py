@@ -1,4 +1,3 @@
-import json
 from copy import copy
 
 from django.conf import settings
