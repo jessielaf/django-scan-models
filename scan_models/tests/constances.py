@@ -17,7 +17,7 @@ standard_output = {
 
 
 def create_test(model):
-    path = "./output.json"
+    path = "./test_output/output.json"
     scan_model(model, path)
 
     file = open(os.path.abspath(path), "r")
