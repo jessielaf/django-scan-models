@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django-scan-models"
-version = "0.2.10"
+version = "0.2.11"
 description = "Django scan models: Parse django models to frontend validation"
 authors = ["Jessie Liauw A Fong <jessielaff@live.nl>"]
 packages = [

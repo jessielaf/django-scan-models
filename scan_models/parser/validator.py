@@ -44,7 +44,11 @@ class ValidatorParser:
         regex_validator = self._find_validator(RegexValidator)
 
         if regex_validator:
-            self.validator_class.set_regex(self.validator, regex_validator.regex.pattern)
+            pattern = regex_validator.regex.pattern
+
+            pattern = pattern.replace("\\Z", "$")
+
+            self.validator_class.set_regex(self.validator, pattern)
 
     def _calculate_max_min_value(self):
         if not isinstance(self.field, fields.IntegerField):

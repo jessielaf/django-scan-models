@@ -111,6 +111,12 @@ class TestValidatorParser(TestCase):
         self.assertTrue(set_regex.called)
         set_regex.reset_mock()
 
+        parser.field = models.CharField(validators=[RegexValidator(regex=r"^[\w.@+-]+\Z")])
+
+        parser._calculate_regex()
+        set_regex.assert_called_with(parser.validator, r"^[\w.@+-]+$")
+        set_regex.reset_mock()
+
     def test_max_min_value(self):
         parser = ValidatorParser(models.CharField())
         set_max_value = MagicMock()
