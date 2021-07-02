@@ -1,24 +1,26 @@
 from collections import OrderedDict
 
 from django.core.validators import MaxValueValidator, MinValueValidator, RegexValidator
-from django.db.models import fields
+from django.db.models import fields, ManyToManyRel, ManyToManyField
 
 from scan_models.factory import Factory
+from scan_models.parser.parser import GeneralParser
 
 
-class ValidatorParser:
+class ValidatorParser(GeneralParser):
     def __init__(self, field: fields.Field):
         self.field = field
         self.validator = OrderedDict()
         self.validator_class = Factory.get_validator()()
 
     def parse(self):
-        self._calculate_required()
-        self._calculate_max_length()
-        self._calculate_choices()
-        self._calculate_max_min_value()
-        self._calculate_email()
-        self._calculate_regex()
+        if not self.is_many:
+            self._calculate_required()
+            self._calculate_max_length()
+            self._calculate_choices()
+            self._calculate_max_min_value()
+            self._calculate_email()
+            self._calculate_regex()
 
         return self.validator
 

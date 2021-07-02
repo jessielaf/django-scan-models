@@ -3,11 +3,12 @@ from collections import OrderedDict
 from unittest.mock import MagicMock
 
 from django.conf import settings
-from django.db.models import fields, Choices
+from django.db.models import fields, Choices, ManyToManyField
 from django.test import TestCase
 
 from scan_models.parser.attributes import AttributesParser
 from scan_models.settings import DEFAULT_SETTINGS
+from tests.models import TestModel
 
 od = OrderedDict()
 
@@ -62,6 +63,11 @@ class TestAttributesParser(TestCase):
 
         # Select
         parser = AttributesParser(fields.CharField(choices=(("1", "1"), ("2", "2"))))
+        parser._calculate_element()
+        self.assertEqual("select", parser.attributes["element"])
+
+        # Many to many
+        parser = AttributesParser(ManyToManyField(TestModel))
         parser._calculate_element()
         self.assertEqual("select", parser.attributes["element"])
 

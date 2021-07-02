@@ -1,11 +1,12 @@
 from collections import OrderedDict
 
-from django.db.models import fields
+from django.db.models import fields, ManyToManyField, ManyToManyRel
 
+from scan_models.parser.parser import GeneralParser
 from scan_models.verbosity import is_verbosity, Verbosity
 
 
-class AttributesParser:
+class AttributesParser(GeneralParser):
     def __init__(self, field: fields.Field):
         self.field = field
         self.attributes = OrderedDict()
@@ -19,13 +20,14 @@ class AttributesParser:
         return self.attributes
 
     def _calculate_element(self):
-        # Only calculate element if verbosity is high enough. This is only the case when using the general-fields package
+        # Only calculate element if verbosity is high enough.
+        # This is only the case when using the general-fields package
         if not is_verbosity(Verbosity.TWO):
             return
 
         element = ""
 
-        if self.field.choices:
+        if self.is_many or self.field.choices:
             element = "select"
         elif isinstance(self.field, fields.TextField):
             element = "textarea"
@@ -48,7 +50,7 @@ class AttributesParser:
             self.attributes["type"] = type_attr
 
     def _calculate_options(self):
-        if self.field.choices:
+        if not self.is_many and self.field.choices:
             self.attributes["options"] = [choice[1] for choice in self.field.choices]
 
     def _calculate_default(self):
@@ -59,7 +61,8 @@ class AttributesParser:
         """
 
         if (
-            self.field.default
+            not self.is_many
+            and self.field.default
             and self.field.default != fields.NOT_PROVIDED
             and isinstance(self.field.default, (list, int, str, bool, float))
         ):

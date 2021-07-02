@@ -13,6 +13,8 @@ standard_output = {
         "attributes": {"options": ["Yes", "No"], "element": "select"},
     },
     "a_or_b": {"validator": {"max": 200, "regex": "(a|b)"}, "attributes": {}},
+    "test_one": {"attributes": {}, "validator": {"required": True}},
+    "test_many": {"attributes": {"element": "select"}, "validator": {}},
 }
 
 
