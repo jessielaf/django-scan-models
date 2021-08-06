@@ -6,6 +6,7 @@ steps:
     image: python:3.6
     commands:
       - pip install poetry
-      - poetry install
-      - poetry shell
+      - poetry config virtualenvs.create false
+      - poetry install --no-interaction
+      - pip list
       - python manage.py test
