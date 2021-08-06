@@ -7,4 +7,6 @@ steps:
     commands:
       - pip install poetry
       - poetry install
+      - poetry config virtualenvs.create false
+      - poetry install --no-interaction
       - python manage.py test
