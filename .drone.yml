@@ -1,0 +1,10 @@
+kind: pipeline
+name: Django scan models
+
+steps:
+  - name: test
+    image: python:3.6
+    commands:
+      - pip install poetry
+      - poetry install
+      - python manage.py test
