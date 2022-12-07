@@ -22,7 +22,11 @@ def scan_model(model_name: str, output: str, location_prefix: str = ""):
     model_meta = apps.get_model(model_name)._meta
 
     # Also add related objects and many to many objects
-    fields = list(model_meta.many_to_many) + list(model_meta.related_objects) + list(model_meta.fields)
+    fields = (
+        list(model_meta.many_to_many)
+        + list(model_meta.related_objects)
+        + list(model_meta.fields)
+    )
 
     for field in fields:
         validator_field = FieldParser(field).parse()

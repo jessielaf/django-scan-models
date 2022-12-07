@@ -2,7 +2,12 @@ from django.conf import settings
 
 SETTING_NAME = "SCAN_MODELS"
 
-DEFAULT_SETTINGS = {"mapping": {}, "validator": "scan_models.validators.VeeValidate", "camelize": False, "verbosity": 2}
+DEFAULT_SETTINGS = {
+    "mapping": {},
+    "validator": "scan_models.generator.vee_validate.VeeValidateGenerator",
+    "camelize": False,
+    "verbosity": 2,
+}
 
 
 def get_setting(name: str):

@@ -27,7 +27,6 @@ class TestAttributesParser(TestCase):
         parser.parse()
 
         self.assertEqual(parser._calculate_options.call_count, 1)
-        self.assertEqual(parser._calculate_element.call_count, 1)
         self.assertEqual(parser._calculate_type.call_count, 1)
         self.assertEqual(parser._calculate_default.call_count, 1)
 
@@ -42,37 +41,16 @@ class TestAttributesParser(TestCase):
         parser._calculate_type()
         self.assertEqual("email", parser.attributes["type"])
 
+        # Array type
+        parser = AttributesParser(ManyToManyField(TestModel))
+        parser._calculate_type()
+        self.assertEqual("email", parser.attributes["type"])
+
     def test_element(self):
-        # Need verbosity 2 for elements in attributes
-        settings.SCAN_MODELS["verbosity"] = 2
-
-        # Checkbox
-        parser = AttributesParser(fields.BooleanField())
-        parser._calculate_element()
-        self.assertEqual("checkbox", parser.attributes["element"])
-
-        # TextArea
+        # Email type
         parser = AttributesParser(fields.TextField())
         parser._calculate_element()
-        self.assertEqual("textarea", parser.attributes["element"])
-
-        # Date
-        parser = AttributesParser(fields.DateField())
-        parser._calculate_element()
-        self.assertEqual("date", parser.attributes["element"])
-
-        # Select
-        parser = AttributesParser(fields.CharField(choices=(("1", "1"), ("2", "2"))))
-        parser._calculate_element()
-        self.assertEqual("select", parser.attributes["element"])
-
-        # Many to many
-        parser = AttributesParser(ManyToManyField(TestModel))
-        parser._calculate_element()
-        self.assertEqual("select", parser.attributes["element"])
-
-        # Reset verbosity
-        settings.SCAN_MODELS["verbosity"] = DEFAULT_SETTINGS["verbosity"]
+        self.assertEqual("textfield", parser.attributes["element"])
 
     def test_options(self):
         class TestChoices(Choices):
