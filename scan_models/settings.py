@@ -4,7 +4,7 @@ SETTING_NAME = "SCAN_MODELS"
 
 DEFAULT_SETTINGS = {
     "mapping": {},
-    "validator": "scan_models.generator.vee_validate.VeeValidateGenerator",
+    "generator": "scan_models.generator.vee_validate.VeeValidateGenerator",
     "camelize": False,
     "verbosity": 2,
 }
